@@ -1,0 +1,5 @@
+1. Semantic Segmentation:
+Pass the raw CT volume (usually in NIfTI format) through TotalSegmentator to extract voxel-level masks of the body, individual bones, and organs.
+
+2. Mesh Reconstruction & Smoothing:
+Convert these dense 3D voxel masks into surface meshes using the Marching Cubes algorithm, followed by Taubin smoothing to remove the "staircase" artifacts inherent to voxel data.
