@@ -1,0 +1,4 @@
+conda create -n digital_twin python=3.10
+conda activate digital_twin
+pip install numpy scipy opencv-python trimesh torch torchvision
+pip install TotalSegmentator pydicom nibabel scikit-image
