@@ -1,0 +1,18 @@
+import trimesh
+from skimage import measure
+
+def extract_smooth_mesh(mask_volume, voxel_spacing):
+    # Apply Marching Cubes
+    verts, faces, normals, values = measure.marching_cubes(
+        mask_volume, level=0.5, spacing=voxel_spacing
+    )
+    
+    mesh = trimesh.Trimesh(vertices=verts, faces=faces)
+    
+    # Apply Taubin Smoothing (prevents volume shrinkage)
+    trimesh.smoothing.filter_taubin(mesh, iterations=10)
+    return mesh
+
+# Example: Extract the femur
+femur_mask = (segmentation_masks.get_fdata() == FEMUR_LABEL)
+femur_mesh = extract_smooth_mesh(femur_mask, ct_image.header.get_zooms())
