@@ -1,0 +1,8 @@
+import nibabel as nib
+from totalsegmentator.python_api import totalsegmentator
+
+# Load the CT scan
+ct_image = nib.load("patient_ct_fullbody.nii.gz")
+
+# Generate segmentation masks for bones and organs
+segmentation_masks = totalsegmentator(ct_image, fast=False)
