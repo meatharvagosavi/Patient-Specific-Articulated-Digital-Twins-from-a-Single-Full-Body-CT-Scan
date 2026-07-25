@@ -1,0 +1,18 @@
+import torch
+import torch.nn.functional as F
+
+def compute_loss(smpl_vertices, ct_skin_mesh, ct_skeleton_mesh, pose_params, shape_params):
+    # 1. Chamfer Distance (Surface matching)
+    l_chamfer = chamfer_distance(smpl_vertices, ct_skin_mesh.vertices)
+    
+    # 2. Inclusion Loss (Skeletal bounding)
+    # Penalize any skeleton vertex that falls outside the SMPL volume
+    distances = compute_signed_distance(ct_skeleton_mesh.vertices, smpl_vertices)
+    l_inclusion = torch.sum(F.relu(distances)) # Only penalize positive (outside) distances
+    
+    # 3. Prior Regularization
+    l_prior = torch.norm(pose_params) + torch.norm(shape_params)
+    
+    # Weighted Sum
+    total_loss = (lambda_c * l_chamfer) + (lambda_i * l_inclusion) + (lambda_p * l_prior)
+    return total_loss
