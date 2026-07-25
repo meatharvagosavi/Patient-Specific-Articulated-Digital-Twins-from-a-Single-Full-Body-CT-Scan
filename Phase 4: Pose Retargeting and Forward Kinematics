@@ -1,0 +1,16 @@
+def retarget_pose(anatomy_rig, target_pose_theta):
+    # Compute new global transformation matrices for all joints
+    global_transforms = forward_kinematics(anatomy_rig.tree, target_pose_theta)
+    
+    reposed_anatomy = {}
+    
+    # Apply rigid transformations to individual bones
+    for bone_name, bone_mesh in anatomy_rig.bones.items():
+        joint_idx = anatomy_rig.bone_to_joint_map[bone_name]
+        transform_matrix = global_transforms[joint_idx]
+        
+        # Apply strict rigid body transform
+        reposed_bone = bone_mesh.apply_transform(transform_matrix)
+        reposed_anatomy[bone_name] = reposed_bone
+        
+    return reposed_anatomy
