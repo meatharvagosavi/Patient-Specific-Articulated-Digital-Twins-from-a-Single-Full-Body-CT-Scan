@@ -1,4 +1,4 @@
-# Patient-Specific Articulated Digital Twins from a Single Full-Body CT 😊
+# Patient Specific Articulated Digital Twins from a Single Full-Body CT 😊
 
 ## 📖 About This Project
 Most CT-derived models are static: they preserve the body configuration captured at scan time, but cannot represent how the same anatomy would appear after patient repositioning. This limitation is especially important for radiographic imaging, where appearance depends jointly on imaging geometry and patient pose. 
